@@ -1,0 +1,51 @@
+22:04:22 **** Incremental Build of configuration Debug for project Test_BMP280 ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/BME280_STM32.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/BME280_STM32.d" -MT"Core/Src/BME280_STM32.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/BME280_STM32.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "Test_BMP280.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\santi\STM32CubeIDE\estacion_meteorologica2023\Test_BMP280\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test_BMP280.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Test_BMP280.elf
+ 
+arm-none-eabi-size   Test_BMP280.elf 
+arm-none-eabi-objdump -h -S  Test_BMP280.elf  > "Test_BMP280.list"
+   text	   data	    bss	    dec	    hex	filename
+  41264	    484	   2156	  43904	   ab80	Test_BMP280.elf
+Finished building: default.size.stdout
+ 
+Finished building: Test_BMP280.list
+ 
+22:04:45 **** Incremental Build of configuration Debug for project Test_BMP280 ****
+make -j4 all 
+arm-none-eabi-size   Test_BMP280.elf 
+   text	   data	    bss	    dec	    hex	filename
+  41264	    484	   2156	  43904	   ab80	Test_BMP280.elf
+Finished building: default.size.stdout
+ 
+22:06:59 **** Incremental Build of configuration Debug for project Test_BMP280 ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/BME280_STM32.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/BME280_STM32.d" -MT"Core/Src/BME280_STM32.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/BME280_STM32.o"
+arm-none-eabi-gcc -o "Test_BMP280.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\santi\STM32CubeIDE\estacion_meteorologica2023\Test_BMP280\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test_BMP280.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Test_BMP280.elf
+ 
+arm-none-eabi-size   Test_BMP280.elf 
+arm-none-eabi-objdump -h -S  Test_BMP280.elf  > "Test_BMP280.list"
+   text	   data	    bss	    dec	    hex	filename
+  41280	    484	   2156	  43920	   ab90	Test_BMP280.elf
+Finished building: default.size.stdout
+ 
+Finished building: Test_BMP280.list
+ 
+22:10:23 **** Incremental Build of configuration Debug for project Test_BMP280 ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/BME280_STM32.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/BME280_STM32.d" -MT"Core/Src/BME280_STM32.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/BME280_STM32.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "Test_BMP280.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\santi\STM32CubeIDE\estacion_meteorologica2023\Test_BMP280\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test_BMP280.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Test_BMP280.elf
+ 
+arm-none-eabi-size   Test_BMP280.elf 
+arm-none-eabi-objdump -h -S  Test_BMP280.elf  > "Test_BMP280.list"
+   text	   data	    bss	    dec	    hex	filename
+  41224	    484	   2156	  43864	   ab58	Test_BMP280.elf
+Finished building: default.size.stdout
+ 
+Finished building: Test_BMP280.list
+ 

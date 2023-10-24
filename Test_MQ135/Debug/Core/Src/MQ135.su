@@ -1,0 +1,2 @@
+../Core/Src/MQ135.c:10:6:MQ135_ConversionPPM	24	static
+../Core/Src/MQ135.c:22:10:MQ135_NivelContaminacion	16	static

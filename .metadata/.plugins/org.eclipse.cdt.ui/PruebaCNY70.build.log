@@ -1,0 +1,10 @@
+17:26:34 **** Incremental Build of configuration Debug for project PruebaCNY70 ****
+make -j4 all 
+arm-none-eabi-size   PruebaCNY70.elf 
+   text	   data	    bss	    dec	    hex	filename
+  14688	     20	   1796	  16504	   4078	PruebaCNY70.elf
+Finished building: default.size.stdout
+ 
+
+17:26:35 Build Finished. 0 errors, 0 warnings. (took 594ms)
+
