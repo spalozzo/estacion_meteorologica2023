@@ -9,7 +9,6 @@
 #define INC_MQ135_H_
 
 #include "main.h"
-#include "math.h"
 
 #define MQ135_RL 1000
 #define MQ135_R0 73

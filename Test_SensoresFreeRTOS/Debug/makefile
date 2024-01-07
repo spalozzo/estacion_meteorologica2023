@@ -66,8 +66,8 @@ all: main-build
 main-build: Test_SensoresFreeRTOS.elf secondary-outputs
 
 # Tool invocations
-Test_SensoresFreeRTOS.elf Test_SensoresFreeRTOS.map: $(OBJS) $(USER_OBJS) C:\Users\santi\STM32CubeIDE\workspace_1.12.0\Test_SensoresFreeRTOS\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Test_SensoresFreeRTOS.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\santi\STM32CubeIDE\workspace_1.12.0\Test_SensoresFreeRTOS\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test_SensoresFreeRTOS.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Test_SensoresFreeRTOS.elf Test_SensoresFreeRTOS.map: $(OBJS) $(USER_OBJS) C:\Users\Alumno\Downloads\Test_Sensores_Andando\Test_SensoresFreeRTOS\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Test_SensoresFreeRTOS.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Alumno\Downloads\Test_Sensores_Andando\Test_SensoresFreeRTOS\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test_SensoresFreeRTOS.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

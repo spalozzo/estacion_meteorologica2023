@@ -25,6 +25,7 @@
 #include "BH1750.h"
 #include "BME280_STM32.h"
 #include "MQ135.h"
+#include "CNY70.h"
 #include "ESPDataLogger.h"
 #include "UartRingbuffer.h"
 /* USER CODE END Includes */
@@ -44,12 +45,12 @@ typedef struct
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define CANT_PARAMETROS 4
+#define CANT_PARAMETROS 6
 
-#define MY_NETWORK "Fibertel WiFi364 2.4GHz"
-#define MY_PASSWORD "00421019428"
+#define MY_NETWORK "Samsung"
+#define MY_PASSWORD "12341234"
 
-#define THINGSPEAK_DELAY 15000
+#define THINGSPEAK_DELAY 20000 //En ms
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -63,18 +64,26 @@ DMA_HandleTypeDef hdma_adc1;
 
 I2C_HandleTypeDef hi2c1;
 
+TIM_HandleTypeDef htim2;
+TIM_HandleTypeDef htim3;
+
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 
 osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
 
-SemaphoreHandle_t sem1;
+SemaphoreHandle_t SEM_Mediciones;
 
 //Estructura que va a guardar todas las mediciones
 SensedValues MedicionesEstacion;
+float dataToSend[CANT_PARAMETROS];
 
+//Sensor de Gas
 uint32_t ConversionGasADC;
+
+//Sensor Optico
+extern uint32_t rpmCNY70;
 
 /* USER CODE END PV */
 
@@ -86,6 +95,8 @@ static void MX_USART2_UART_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_ADC1_Init(void);
+static void MX_TIM2_Init(void);
+static void MX_TIM3_Init(void);
 void StartDefaultTask(void const * argument);
 
 /* USER CODE BEGIN PFP */
@@ -94,17 +105,28 @@ void StartDefaultTask(void const * argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
+{
+	CNY70_FlancosUp();
+}
+
 void Task_ReadSensors(void *pvParam)
 {
+	HAL_ADC_Start_DMA(&hadc1, &ConversionGasADC, 1);
+	HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_3);
+	HAL_TIM_Base_Start_IT(&htim3);
+
 	while(1)
 	{
-		//xSemaphoreTake(sem1, portMAX_DELAY);
+		xSemaphoreTake(SEM_Mediciones, portMAX_DELAY);
 		BME280_Measure(&MedicionesEstacion.Temperature, &MedicionesEstacion.Pressure);
 		BH1750_ReadLight(&MedicionesEstacion.Light);
 		MedicionesEstacion.AirQuality= MQ135_NivelContaminacion(ConversionGasADC);
+		MedicionesEstacion.WindSpeed= CNY70_MedicionVelocidad(rpmCNY70);
 
-		//xSemaphoreGive(sem1);
-		//osDelay(1000);
+		xSemaphoreGive(SEM_Mediciones);
+		vTaskDelay(pdMS_TO_TICKS(1000));
 	}
 }
 
@@ -141,19 +163,22 @@ void Task_ReadWindSpeed(void *pvParam)
 void Task_SendDataToThingspeak(void *pvParam)
 {
 	//Esta tarea debe ejecutarse cada 15segs como maximo
-	float dataToSend[CANT_PARAMETROS];
+	vTaskDelay(pdMS_TO_TICKS(5000)); //Evito que entre primero esta tarea
 
 	while(1)
 	{
-		xSemaphoreTake(sem1, portMAX_DELAY);
-		dataToSend[0]= MedicionesEstacion.Temperature;
-		dataToSend[1]= MedicionesEstacion.Pressure;
-		dataToSend[2]= MedicionesEstacion.Light;
-		dataToSend[3]= MedicionesEstacion.AirQuality;
+		xSemaphoreTake(SEM_Mediciones, portMAX_DELAY);
+		dataToSend[0]= round(MedicionesEstacion.Temperature * 100)/100;
+		dataToSend[1]= round(MedicionesEstacion.Humidity * 100)/100;
+		dataToSend[2]= round(MedicionesEstacion.Pressure * 100)/100;
+		dataToSend[3]= round(MedicionesEstacion.WindSpeed * 100)/100;
+		dataToSend[4]= round(MedicionesEstacion.Light * 100)/100;
+		dataToSend[5]= round(MedicionesEstacion.AirQuality * 100)/100;
 
+		xSemaphoreGive(SEM_Mediciones);
 		ESP_Send_Multi("GZ88XIL7XS30EM51", CANT_PARAMETROS, dataToSend);
-		xSemaphoreGive(sem1);
-		osDelay(THINGSPEAK_DELAY);
+
+		vTaskDelay(pdMS_TO_TICKS(THINGSPEAK_DELAY));
 	}
 }
 /* USER CODE END 0 */
@@ -191,6 +216,8 @@ int main(void)
   MX_I2C1_Init();
   MX_USART1_UART_Init();
   MX_ADC1_Init();
+  MX_TIM2_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 
   //Inicializacion BH1750
@@ -205,7 +232,7 @@ int main(void)
   ESP_Init(MY_NETWORK, MY_PASSWORD);
 
   //Inicializacion MQ135
-  HAL_ADC_Start_DMA(&hadc1, &ConversionGasADC, 1);
+
 
 
   /* USER CODE END 2 */
@@ -217,8 +244,9 @@ int main(void)
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
 
-  sem1= xSemaphoreCreateBinary();
-  xSemaphoreTake(sem1, 0);
+  SEM_Mediciones= xSemaphoreCreateBinary();
+  xSemaphoreTake(SEM_Mediciones, 0);
+  xSemaphoreGive(SEM_Mediciones);
 
   /* USER CODE END RTOS_SEMAPHORES */
 
@@ -246,7 +274,7 @@ int main(void)
 //  xTaskCreate(Task_ReadWindSpeed, "ReadWindSpeed", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
 
   xTaskCreate(Task_ReadSensors, "ReadSensors", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-//  xTaskCreate(Task_SendDataToThingspeak, "SendDataToThingspeak", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
+  xTaskCreate(Task_SendDataToThingspeak, "SendDataToThingspeak", configMINIMAL_STACK_SIZE*5, NULL, tskIDLE_PRIORITY + 2, NULL);
 
   vTaskStartScheduler();
 
@@ -332,7 +360,7 @@ static void MX_ADC1_Init(void)
   /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
   */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV8;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.ScanConvMode = ENABLE;
   hadc1.Init.ContinuousConvMode = ENABLE;
@@ -340,8 +368,8 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc1.Init.NbrOfConversion = 1;
-  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.NbrOfConversion = 8;
+  hadc1.Init.DMAContinuousRequests = ENABLE;
   hadc1.Init.EOCSelection = ADC_EOC_SEQ_CONV;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
   {
@@ -352,7 +380,63 @@ static void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_0;
   sConfig.Rank = 1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
+  sConfig.SamplingTime = ADC_SAMPLETIME_480CYCLES;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
+  sConfig.Rank = 2;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
+  sConfig.Rank = 3;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
+  sConfig.Rank = 4;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
+  sConfig.Rank = 5;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
+  sConfig.Rank = 6;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
+  sConfig.Rank = 7;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
+  sConfig.Rank = 8;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -394,6 +478,109 @@ static void MX_I2C1_Init(void)
   /* USER CODE BEGIN I2C1_Init 2 */
 
   /* USER CODE END I2C1_Init 2 */
+
+}
+
+/**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_IC_InitTypeDef sConfigIC = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 42000-1;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 10000-1;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV2;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_IC_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_RISING;
+  sConfigIC.ICSelection = TIM_ICSELECTION_DIRECTTI;
+  sConfigIC.ICPrescaler = TIM_ICPSC_DIV1;
+  sConfigIC.ICFilter = 0;
+  if (HAL_TIM_IC_ConfigChannel(&htim2, &sConfigIC, TIM_CHANNEL_3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
+
+}
+
+/**
+  * @brief TIM3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM3_Init(void)
+{
+
+  /* USER CODE BEGIN TIM3_Init 0 */
+
+  /* USER CODE END TIM3_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM3_Init 1 */
+
+  /* USER CODE END TIM3_Init 1 */
+  htim3.Instance = TIM3;
+  htim3.Init.Prescaler = 42000-1;
+  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim3.Init.Period = 60000-1;
+  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV2;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM3_Init 2 */
+
+  /* USER CODE END TIM3_Init 2 */
 
 }
 
@@ -549,7 +736,10 @@ void StartDefaultTask(void const * argument)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
-
+	if(htim == &htim3)
+	{
+		CNY70_TIM_Callback();
+	}
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM1) {
     HAL_IncTick();

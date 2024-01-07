@@ -1,5 +1,5 @@
 Core/Src/Sensores/BME280_STM32.o: ../Core/Src/Sensores/BME280_STM32.c \
- C:/Users/santi/STM32CubeIDE/workspace_1.12.0/Test_SensoresFreeRTOS/Core/Inc/Sensores/BME280_STM32.h \
+ C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/Sensores/BME280_STM32.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -34,7 +34,7 @@ Core/Src/Sensores/BME280_STM32.o: ../Core/Src/Sensores/BME280_STM32.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/main.h
-C:/Users/santi/STM32CubeIDE/workspace_1.12.0/Test_SensoresFreeRTOS/Core/Inc/Sensores/BME280_STM32.h:
+C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/Sensores/BME280_STM32.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:
