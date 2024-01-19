@@ -1,5 +1,5 @@
 Core/Src/Sensores/BH1750.o: ../Core/Src/Sensores/BH1750.c \
- C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/Sensores/BH1750.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/BH1750.h \
  ../Core/Inc/main.h ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -32,8 +32,13 @@ Core/Src/Sensores/BH1750.o: ../Core/Src/Sensores/BH1750.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
-C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/Sensores/BH1750.h:
+ ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/BMP280.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/MQ135.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/CNY70.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/ESPDataLogger.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/UartRingbuffer.h
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/BH1750.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -68,3 +73,8 @@ C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/S
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/BMP280.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/MQ135.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/CNY70.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/ESPDataLogger.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/UartRingbuffer.h:

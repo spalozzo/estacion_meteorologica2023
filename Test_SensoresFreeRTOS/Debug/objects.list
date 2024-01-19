@@ -1,7 +1,7 @@
 "./Core/Src/ESP/ESPDataLogger.o"
 "./Core/Src/ESP/UartRingbuffer.o"
 "./Core/Src/Sensores/BH1750.o"
-"./Core/Src/Sensores/BME280_STM32.o"
+"./Core/Src/Sensores/BMP280.o"
 "./Core/Src/Sensores/CNY70.o"
 "./Core/Src/Sensores/MQ135.o"
 "./Core/Src/freertos.o"

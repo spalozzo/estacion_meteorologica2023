@@ -22,12 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "BH1750.h"
-#include "BME280_STM32.h"
-#include "MQ135.h"
-#include "CNY70.h"
-#include "ESPDataLogger.h"
-#include "UartRingbuffer.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -63,6 +58,8 @@ ADC_HandleTypeDef hadc1;
 DMA_HandleTypeDef hdma_adc1;
 
 I2C_HandleTypeDef hi2c1;
+DMA_HandleTypeDef hdma_i2c1_rx;
+DMA_HandleTypeDef hdma_i2c1_tx;
 
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
@@ -85,6 +82,12 @@ uint32_t ConversionGasADC;
 //Sensor Optico
 extern uint32_t rpmCNY70;
 
+//Sensor de Presion
+extern uint8_t chipID;
+extern int32_t tRaw, pRaw, hRaw;
+extern uint8_t RawData[8];
+float Temperature, Pressure, Humidity;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -106,6 +109,19 @@ void StartDefaultTask(void const * argument);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c)
+{
+	if(hi2c == &hi2c1)
+	{
+		/* Calculate the Raw data for the parameters
+		* Here the Pressure and Temperature are in 20 bit format and humidity in 16 bit format
+		*/
+		pRaw = (RawData[0]<<12)|(RawData[1]<<4)|(RawData[2]>>4);
+		tRaw = (RawData[3]<<12)|(RawData[4]<<4)|(RawData[5]>>4);
+		hRaw = (RawData[6]<<8)|(RawData[7]);
+	}
+}
+
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
 	CNY70_FlancosUp();
@@ -120,7 +136,9 @@ void Task_ReadSensors(void *pvParam)
 	while(1)
 	{
 		xSemaphoreTake(SEM_Mediciones, portMAX_DELAY);
-		BME280_Measure(&MedicionesEstacion.Temperature, &MedicionesEstacion.Pressure);
+		BME280_Measure();
+		MedicionesEstacion.Temperature = Temperature;
+		MedicionesEstacion.Pressure = Pressure;
 		BH1750_ReadLight(&MedicionesEstacion.Light);
 		MedicionesEstacion.AirQuality= MQ135_NivelContaminacion(ConversionGasADC);
 		MedicionesEstacion.WindSpeed= CNY70_MedicionVelocidad(rpmCNY70);
@@ -128,36 +146,6 @@ void Task_ReadSensors(void *pvParam)
 		xSemaphoreGive(SEM_Mediciones);
 		vTaskDelay(pdMS_TO_TICKS(1000));
 	}
-}
-
-void Task_ReadTemperature(void *pvParam)
-{
-	//Deberia meter todo el codigo de las tareas en un while(1) ??
-}
-
-void Task_ReadPressure(void *pvParam)
-{
-	BME280_Measure(&MedicionesEstacion.Temperature, &MedicionesEstacion.Pressure);
-}
-
-void Task_ReadHumidity(void *pvParam)
-{
-
-}
-
-void Task_ReadLight(void *pvParam)
-{
-	BH1750_ReadLight(&MedicionesEstacion.Light);
-}
-
-void Task_ReadAirQuality(void *pvParam)
-{
-	MedicionesEstacion.AirQuality= MQ135_NivelContaminacion(ConversionGasADC);
-}
-
-void Task_ReadWindSpeed(void *pvParam)
-{
-
 }
 
 void Task_SendDataToThingspeak(void *pvParam)
@@ -265,13 +253,6 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-
-//  xTaskCreate(Task_ReadTemperature, "ReadTemperature", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-//  xTaskCreate(Task_ReadPressure, "ReadPressure", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-//  xTaskCreate(Task_ReadHumidity, "ReadHumidity", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-//  xTaskCreate(Task_ReadLight, "ReadLight", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-//  xTaskCreate(Task_ReadAirQuality, "ReadAirQuality", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-//  xTaskCreate(Task_ReadWindSpeed, "ReadWindSpeed", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
 
   xTaskCreate(Task_ReadSensors, "ReadSensors", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
   xTaskCreate(Task_SendDataToThingspeak, "SendDataToThingspeak", configMINIMAL_STACK_SIZE*5, NULL, tskIDLE_PRIORITY + 2, NULL);
@@ -658,8 +639,15 @@ static void MX_DMA_Init(void)
 
   /* DMA controller clock enable */
   __HAL_RCC_DMA2_CLK_ENABLE();
+  __HAL_RCC_DMA1_CLK_ENABLE();
 
   /* DMA interrupt init */
+  /* DMA1_Stream0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
+  /* DMA1_Stream6_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream6_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream6_IRQn);
   /* DMA2_Stream0_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);

@@ -32,6 +32,13 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "math.h"
+
+#include "BH1750.h"
+#include <BMP280.h>
+#include "MQ135.h"
+#include "CNY70.h"
+#include "ESPDataLogger.h"
+#include "UartRingbuffer.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

@@ -1,0 +1,12 @@
+../Core/Src/Datos_Display.c:56:6:Mostrar_Temperatura	16	static
+../Core/Src/Datos_Display.c:89:6:Mostrar_Humedad	8	static
+../Core/Src/Datos_Display.c:117:6:Mostrar_Presion	16	static
+../Core/Src/Datos_Display.c:148:6:Mostrar_Lux	16	static
+../Core/Src/Datos_Display.c:174:6:Mostrar_Velocidad	16	static
+../Core/Src/Datos_Display.c:203:6:Mostrar_Calidad_Aire	16	static
+../Core/Src/Datos_Display.c:227:6:Mostrar_Tiempo	32	static
+../Core/Src/Datos_Display.c:252:6:Char_Display	24	static
+../Core/Src/Datos_Display.c:301:6:Char_Display_Black	24	static
+../Core/Src/Datos_Display.c:350:6:Scroll	16	static
+../Core/Src/Datos_Display.c:391:6:Scroll2	16	static
+../Core/Src/Datos_Display.c:433:6:Mostrar_Datos	8	static

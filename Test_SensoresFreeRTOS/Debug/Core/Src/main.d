@@ -32,6 +32,12 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/BH1750.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/BMP280.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/MQ135.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/CNY70.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/ESPDataLogger.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/UartRingbuffer.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../Core/Inc/FreeRTOSConfig.h \
@@ -48,13 +54,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/Sensores/BH1750.h \
- C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/Sensores/BME280_STM32.h \
- C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/Sensores/MQ135.h \
- C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/Sensores/CNY70.h \
- C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/ESP/ESPDataLogger.h \
- C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/ESP/UartRingbuffer.h
+ ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -89,6 +89,12 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/BH1750.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/BMP280.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/MQ135.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/CNY70.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/ESPDataLogger.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/UartRingbuffer.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 ../Core/Inc/FreeRTOSConfig.h:
@@ -106,9 +112,3 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/Sensores/BH1750.h:
-C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/Sensores/BME280_STM32.h:
-C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/Sensores/MQ135.h:
-C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/Sensores/CNY70.h:
-C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/ESP/ESPDataLogger.h:
-C:/Users/Alumno/Downloads/Test_Sensores_Andando/Test_SensoresFreeRTOS/Core/Inc/ESP/UartRingbuffer.h:

@@ -20,6 +20,9 @@ I2C_HandleTypeDef 	*bh1750_i2c;	// Handler to I2C interface
 BH1750_MODE			Bh1750_Mode;	// Current sensor mode
 uint8_t 			Bh1750_Mtreg;	// Current MT register value
 
+extern DMA_HandleTypeDef 	hdma_i2c1_tx;
+extern DMA_HandleTypeDef 	hdma_i2c1_rx;
+
 //
 //	Initialization.
 //
@@ -129,7 +132,8 @@ BH1750_STATUS BH1750_ReadLight(float *Result)
 	float result;
 	uint8_t tmp[2];
 
-	if(HAL_OK == HAL_I2C_Master_Receive(bh1750_i2c, BH1750_ADDRESS, tmp, 2, 10))
+	//if(HAL_OK == HAL_I2C_Master_Receive(bh1750_i2c, BH1750_ADDRESS, tmp, 2, 10))
+	if(HAL_OK == HAL_I2C_Master_Receive_DMA(bh1750_i2c, BH1750_ADDRESS, tmp, 2))
 	{
 		result = (tmp[0] << 8) | (tmp[1]);
 
