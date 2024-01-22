@@ -58,6 +58,7 @@ extern void Uart_isr (UART_HandleTypeDef *huart);
 extern DMA_HandleTypeDef hdma_adc1;
 extern DMA_HandleTypeDef hdma_i2c1_rx;
 extern DMA_HandleTypeDef hdma_i2c1_tx;
+extern I2C_HandleTypeDef hi2c1;
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim3;
 extern UART_HandleTypeDef huart1;
@@ -233,6 +234,20 @@ void TIM3_IRQHandler(void)
   /* USER CODE BEGIN TIM3_IRQn 1 */
 
   /* USER CODE END TIM3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles I2C1 event interrupt.
+  */
+void I2C1_EV_IRQHandler(void)
+{
+  /* USER CODE BEGIN I2C1_EV_IRQn 0 */
+
+  /* USER CODE END I2C1_EV_IRQn 0 */
+  HAL_I2C_EV_IRQHandler(&hi2c1);
+  /* USER CODE BEGIN I2C1_EV_IRQn 1 */
+
+  /* USER CODE END I2C1_EV_IRQn 1 */
 }
 
 /**

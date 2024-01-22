@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (11.3.rel1)
+# Toolchain: GNU Tools for STM32 (10.3-2021.10)
 ################################################################################
 
 ELF_SRCS := 
@@ -22,6 +22,9 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+Core/Src/Display \
+Core/Src/ESP \
+Core/Src/Sensores \
 Core/Src \
 Core/Startup \
 Drivers/STM32F4xx_HAL_Driver/Src \

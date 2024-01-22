@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  000201dc  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000d890  00000000  00000000  0002020c  2**0
+ 12 .debug_info   0000d895  00000000  00000000  0002020c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 000020f3  00000000  00000000  0002da9c  2**0
+ 13 .debug_abbrev 000020f3  00000000  00000000  0002daa1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000b40  00000000  00000000  0002fb90  2**3
+ 14 .debug_aranges 00000b40  00000000  00000000  0002fb98  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 00000a90  00000000  00000000  000306d0  2**3
+ 15 .debug_ranges 00000a90  00000000  00000000  000306d8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001624f  00000000  00000000  00031160  2**0
+ 16 .debug_macro  0001624f  00000000  00000000  00031168  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000e663  00000000  00000000  000473af  2**0
+ 17 .debug_line   0000e665  00000000  00000000  000473b7  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0008928e  00000000  00000000  00055a12  2**0
+ 18 .debug_str    00089297  00000000  00000000  00055a1c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  000deca0  2**0
+ 19 .comment      00000050  00000000  00000000  000decb3  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00003ed8  00000000  00000000  000decf0  2**2
+ 20 .debug_frame  00003ed8  00000000  00000000  000ded04  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1691,11 +1691,11 @@ int BMEReadRaw(void)
  8001284:	b580      	push	{r7, lr}
  8001286:	b082      	sub	sp, #8
  8001288:	af02      	add	r7, sp, #8
-	// Check the chip ID before reading
-	//HAL_I2C_Mem_Read(&hi2c1, BME280_ADDRESS, ID_REG, 1, &chipID, 1, 1000);
-	//HAL_I2C_Mem_Read_DMA(&hi2c1, BME280_ADDRESS, ID_REG, 1, &chipID, 1);
-	//MemRxCallback_Function= READ_CHIP_ID;
-	//HAL_I2C_Mem_Read_IT(&hi2c1, BME280_ADDRESS, ID_REG, 1, &chipID, 1);
+	 * Si trato de leer el chip ID de alguna forma no bloqueante (IT, DMA, ...) no lee bien
+	 * despues los datos, no se porque. Entonces hardcodeo que estoy comunicandome bien con el
+	 * chip para poder levantar los datos crudos y anda bien.
+	 */
+
 	chipID = 0x58;
  800128a:	4b0c      	ldr	r3, [pc, #48]	; (80012bc <BMEReadRaw+0x38>)
  800128c:	2258      	movs	r2, #88	; 0x58

@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (11.3.rel1)
+# Toolchain: GNU Tools for STM32 (10.3-2021.10)
 ################################################################################
 
 -include ../makefile.init
@@ -15,6 +15,9 @@ RM := rm -rf
 -include Middlewares/Third_Party/FreeRTOS/Source/subdir.mk
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
+-include Core/Src/Sensores/subdir.mk
+-include Core/Src/ESP/subdir.mk
+-include Core/Src/Display/subdir.mk
 -include Core/Src/subdir.mk
 -include objects.mk
 
@@ -64,8 +67,8 @@ all: main-build
 main-build: Display_Sensores_RTOS.elf secondary-outputs
 
 # Tool invocations
-Display_Sensores_RTOS.elf Display_Sensores_RTOS.map: $(OBJS) $(USER_OBJS) C:\Users\axu_n\OneDrive\Escritorio\UTN(2023)\TD2\STM\Display_Sensores_RTOS\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Display_Sensores_RTOS.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\axu_n\OneDrive\Escritorio\UTN(2023)\TD2\STM\Display_Sensores_RTOS\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Display_Sensores_RTOS.map" -Wl,--gc-sections -static -u _printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Display_Sensores_RTOS.elf Display_Sensores_RTOS.map: $(OBJS) $(USER_OBJS) C:\Users\Santi\Documents\ProyectoTD2\estacion_meteorologica2023\Display_Sensores_RTOS\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Display_Sensores_RTOS.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Santi\Documents\ProyectoTD2\estacion_meteorologica2023\Display_Sensores_RTOS\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Display_Sensores_RTOS.map" -Wl,--gc-sections -static -u _printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

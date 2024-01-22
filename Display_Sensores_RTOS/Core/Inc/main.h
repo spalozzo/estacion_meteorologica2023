@@ -31,7 +31,22 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "math.h"
 
+//Sensores
+#include "LM35.h"
+#include "DHT22.h"
+#include "BH1750.h"
+#include <BMP280.h>
+#include "MQ135.h"
+#include "CNY70.h"
+
+//Display
+#include "Datos_Display.h"
+
+//ESP32
+#include "ESPDataLogger.h"
+#include "UartRingbuffer.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

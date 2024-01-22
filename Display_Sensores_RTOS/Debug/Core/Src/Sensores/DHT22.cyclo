@@ -1,0 +1,7 @@
+DHT22.c:41:6:Set_Pin_Output	1
+DHT22.c:50:6:Set_Pin_Input	1
+DHT22.c:59:6:delay	2
+DHT22.c:68:6:DHT22_Start_V2	1
+DHT22.c:91:6:HAL_TIM_IC_CaptureCallback	7
+DHT22.c:122:6:DHT22_Recieve	37
+DHT22.c:216:6:DHT22_Read_Humidity	2

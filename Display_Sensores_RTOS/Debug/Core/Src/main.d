@@ -34,6 +34,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Sensores/LM35.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../Core/Inc/FreeRTOSConfig.h \
@@ -51,9 +52,17 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- ../Core/Inc/LM35.h ../Core/Inc/main.h ../Core/Inc/DHT22.h \
- ../Core/Inc/Datos_Display.h ../Core/Inc/ssd1306.h \
- ../Core/Inc/ssd1306_conf.h ../Core/Inc/ssd1306_fonts.h
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Sensores/DHT22.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Sensores/BH1750.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Sensores/BMP280.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Sensores/MQ135.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Sensores/CNY70.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Display/Datos_Display.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Display/ssd1306.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Display/ssd1306_conf.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Display/ssd1306_fonts.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/ESP/ESPDataLogger.h \
+ C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/ESP/UartRingbuffer.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -90,6 +99,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Sensores/LM35.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 ../Core/Inc/FreeRTOSConfig.h:
@@ -107,10 +117,14 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-../Core/Inc/LM35.h:
-../Core/Inc/main.h:
-../Core/Inc/DHT22.h:
-../Core/Inc/Datos_Display.h:
-../Core/Inc/ssd1306.h:
-../Core/Inc/ssd1306_conf.h:
-../Core/Inc/ssd1306_fonts.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Sensores/DHT22.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Sensores/BH1750.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Sensores/BMP280.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Sensores/MQ135.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Sensores/CNY70.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Display/Datos_Display.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Display/ssd1306.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Display/ssd1306_conf.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/Display/ssd1306_fonts.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/ESP/ESPDataLogger.h:
+C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Display_Sensores_RTOS/Core/Inc/ESP/UartRingbuffer.h:
