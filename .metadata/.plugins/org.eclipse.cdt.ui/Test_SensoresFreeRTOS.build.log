@@ -1,10 +1,17 @@
-00:10:44 **** Incremental Build of configuration Debug for project Test_SensoresFreeRTOS ****
+15:51:20 **** Incremental Build of configuration Debug for project Test_SensoresFreeRTOS ****
 make -j4 all 
-arm-none-eabi-size   Test_SensoresFreeRTOS.elf 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP" -I"C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "Test_SensoresFreeRTOS.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\santi\STM32CubeIDE\estacion_meteorologica2023\Test_SensoresFreeRTOS\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test_SensoresFreeRTOS.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Test_SensoresFreeRTOS.elf
+ 
+arm-none-eabi-size  Test_SensoresFreeRTOS.elf 
+arm-none-eabi-objdump -h -S Test_SensoresFreeRTOS.elf  > "Test_SensoresFreeRTOS.list"
    text	   data	    bss	    dec	    hex	filename
-  67128	    488	  20408	  88024	  157d8	Test_SensoresFreeRTOS.elf
+  56620	    480	  20584	  77684	  12f74	Test_SensoresFreeRTOS.elf
 Finished building: default.size.stdout
  
+Finished building: Test_SensoresFreeRTOS.list
+ 
 
-00:10:44 Build Finished. 0 errors, 0 warnings. (took 739ms)
+15:51:23 Build Finished. 0 errors, 0 warnings. (took 2s.766ms)
 

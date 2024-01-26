@@ -1,5 +1,5 @@
 Core/Src/Sensores/BMP280.o: ../Core/Src/Sensores/BMP280.c \
- C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/BMP280.h \
+ C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/BMP280.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -33,7 +33,7 @@ Core/Src/Sensores/BMP280.o: ../Core/Src/Sensores/BMP280.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
-C:/Users/Santi/Documents/ProyectoTD2/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/BMP280.h:
+C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/Sensores/BMP280.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:

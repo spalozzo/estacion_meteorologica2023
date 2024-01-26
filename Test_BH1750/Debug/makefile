@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (10.3-2021.10)
+# Toolchain: GNU Tools for STM32 (11.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -60,8 +60,8 @@ all: main-build
 main-build: Test_BH1750.elf secondary-outputs
 
 # Tool invocations
-Test_BH1750.elf Test_BH1750.map: $(OBJS) $(USER_OBJS) C:\Users\Santi\Documents\ProyectoTD2\estacion_meteorologica2023\Test_BH1750\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Test_BH1750.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Santi\Documents\ProyectoTD2\estacion_meteorologica2023\Test_BH1750\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test_BH1750.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Test_BH1750.elf Test_BH1750.map: $(OBJS) $(USER_OBJS) C:\Users\santi\STM32CubeIDE\estacion_meteorologica2023\Test_BH1750\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Test_BH1750.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\santi\STM32CubeIDE\estacion_meteorologica2023\Test_BH1750\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Test_BH1750.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

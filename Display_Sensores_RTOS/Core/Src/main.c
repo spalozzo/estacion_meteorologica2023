@@ -23,6 +23,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "LM35.h"
+#include "DHT22.h"
+#include "Datos_Display.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,14 +46,7 @@ typedef struct
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define CANT_PARAMETROS 6
 
-#define MY_NETWORK "Fibertel WiFi516 2.4GHz"
-#define MY_PASSWORD "00421584233"
-//#define MY_NETWORK "Samsung"
-//#define MY_PASSWORD "12341234"
-
-#define THINGSPEAK_DELAY 20000 //En ms
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -86,27 +83,11 @@ uint8_t Flag_Datos;
 
 uint16_t Datos = 3000;
 
+SensedValues MedicionesEstacion;
+
 extern uint8_t enableCapture;
 
 extern uint8_t start;
-
-SemaphoreHandle_t SEM_Mediciones;
-
-//Estructura que va a guardar todas las mediciones
-SensedValues MedicionesEstacion;
-float dataToSend[CANT_PARAMETROS];
-
-//Sensor de Gas
-uint32_t ConversionGasADC;
-
-//Sensor Optico
-extern uint32_t rpmCNY70;
-
-//Sensor de Presion
-extern uint8_t chipID;
-extern int32_t tRaw, pRaw, hRaw;
-extern uint8_t RawData[8];
-float Temperature, Pressure, Humidity;
 
 /* USER CODE END PV */
 
@@ -129,24 +110,6 @@ void StartDefaultTask(void const * argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c)
-{
-	if(hi2c == &hi2c1)
-	{
-		/* Calculate the Raw data for the parameters
-		* Here the Pressure and Temperature are in 20 bit format and humidity in 16 bit format
-		*/
-		pRaw = (RawData[0]<<12)|(RawData[1]<<4)|(RawData[2]>>4);
-		tRaw = (RawData[3]<<12)|(RawData[4]<<4)|(RawData[5]>>4);
-		hRaw = (RawData[6]<<8)|(RawData[7]);
-	}
-}
-/*
-void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
-{
-	CNY70_FlancosUp();
-}*/
 
 void Set_Time(void)
 {
@@ -208,19 +171,6 @@ void Set_Alarm (void)
 	/* USER CODE END RTC_Init 2 */
 }
 
-void scrollUp() {
-    for (int page = 0; page < 64 / 8 - 1; ++page) {
-        for (int col = 0; col < 128; ++col) {
-            screenBuffer[col + page * 128] = screenBuffer[col + (page + 1) * 128];
-        }
-    }
-    // Llena la última página con nuevos datos (ajusta esto según tus necesidades)
-    for (int col = 0; col < 128; ++col) {
-        screenBuffer[col + (64 / 8 - 1) * 128] = 0xFF;
-    }
-    ssd1306_UpdateScreen();
-}
-
 void Task_Data_Display (void *pvParameters)
 {
 	//vTaskPrioritySet(Task_ReadSensors, tskIDLE_PRIORITY + 2);
@@ -249,51 +199,39 @@ void Task_Data_Display (void *pvParameters)
 void Task_ReadSensors(void *pvParam)
 {
 	HAL_TIM_Base_Start_IT(&htim4);
-	HAL_ADC_Start_DMA(&hadc1, &Temp_ADC, 1);
 
-	//Chequear esto de abajo para que coincida con el IOC
-	HAL_ADC_Start_DMA(&hadc1, &ConversionGasADC, 1);
-	HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_3);
-	HAL_TIM_Base_Start_IT(&htim3);
+	HAL_ADC_Start_DMA(&hadc1, &Temp_ADC, 1);
 
 	while(1)
 	{
-		xSemaphoreTake(SEM_Mediciones, portMAX_DELAY);
-		BME280_Measure();
-		MedicionesEstacion.Pressure = Pressure;
-		BH1750_ReadLight(&MedicionesEstacion.Light);
-		MedicionesEstacion.AirQuality= MQ135_NivelContaminacion(ConversionGasADC);
-		MedicionesEstacion.WindSpeed= CNY70_MedicionVelocidad(rpmCNY70);
+		//xSemaphoreTake(sem1, portMAX_DELAY);
+		//BME280_Measure(&MedicionesEstacion.Temperature, &MedicionesEstacion.Pressure);
+		//BH1750_ReadLight(&MedicionesEstacion.Light);
+		//MedicionesEstacion.AirQuality= MQ135_NivelContaminacion(ConversionGasADC);
+
 		MedicionesEstacion.Temperature = LM35_Read_Temperature(Temp_ADC);
 		DHT22_Read_Humidity(&MedicionesEstacion.Humidity);
 
-		xSemaphoreGive(SEM_Mediciones);
+		//xSemaphoreGive(sem1);
+
+		//vTaskPrioritySet(Task_ReadSensors, tskIDLE_PRIORITY + 1);
+
 		vTaskDelay(pdMS_TO_TICKS(1000));
 	}
 }
 
-void Task_SendDataToThingspeak(void *pvParam)
-{
-	//Esta tarea debe ejecutarse cada 15segs como maximo
-	vTaskDelay(pdMS_TO_TICKS(5000)); //Evito que entre primero esta tarea
-
-	while(1)
-	{
-		xSemaphoreTake(SEM_Mediciones, portMAX_DELAY);
-		dataToSend[0]= round(MedicionesEstacion.Temperature * 100)/100;
-		dataToSend[1]= round(MedicionesEstacion.Humidity * 100)/100;
-		dataToSend[2]= round(MedicionesEstacion.Pressure * 100)/100;
-		dataToSend[3]= round(MedicionesEstacion.WindSpeed * 100)/100;
-		dataToSend[4]= round(MedicionesEstacion.Light * 100)/100;
-		dataToSend[5]= round(MedicionesEstacion.AirQuality * 100)/100;
-
-		xSemaphoreGive(SEM_Mediciones);
-		ESP_Send_Multi("GZ88XIL7XS30EM51", CANT_PARAMETROS, dataToSend);
-
-		vTaskDelay(pdMS_TO_TICKS(THINGSPEAK_DELAY));
-	}
+void scrollUp() {
+    for (int page = 0; page < 64 / 8 - 1; ++page) {
+        for (int col = 0; col < 128; ++col) {
+            screenBuffer[col + page * 128] = screenBuffer[col + (page + 1) * 128];
+        }
+    }
+    // Llena la última página con nuevos datos (ajusta esto según tus necesidades)
+    for (int col = 0; col < 128; ++col) {
+        screenBuffer[col + (64 / 8 - 1) * 128] = 0xFF;
+    }
+    ssd1306_UpdateScreen();
 }
-
 
 /* USER CODE END 0 */
 
@@ -335,17 +273,6 @@ int main(void)
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
 
-  //Inicializacion BH1750
-  BH1750_Init(&hi2c1);
-  BH1750_SetMode(CONTINUOUS_HIGH_RES_MODE);
-
-  //Inicializacion BMP280
-  BME280_Config(OSRS_1, OSRS_4, OSRS_1, MODE_NORMAL, T_SB_0p5, IIR_16);
-
-
-  //Inicializacion ESP01
-  ESP_Init(MY_NETWORK, MY_PASSWORD);
-
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -354,11 +281,6 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
-
-  SEM_Mediciones= xSemaphoreCreateBinary();
-  xSemaphoreTake(SEM_Mediciones, 0);
-  xSemaphoreGive(SEM_Mediciones);
-
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
@@ -380,7 +302,6 @@ int main(void)
 
   xTaskCreate(Task_Data_Display, "Data_Display", configMINIMAL_STACK_SIZE * 3, NULL, tskIDLE_PRIORITY + 1, NULL);
   xTaskCreate(Task_ReadSensors, "ReadSensors", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
-  xTaskCreate(Task_SendDataToThingspeak, "SendDataToThingspeak", configMINIMAL_STACK_SIZE*5, NULL, tskIDLE_PRIORITY + 2, NULL);
 
   vTaskStartScheduler();
 

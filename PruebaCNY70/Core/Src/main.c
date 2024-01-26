@@ -137,7 +137,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  lecturaCNY70= HAL_GPIO_ReadPin(CNY70_GPIO_Port, CNY70_Pin);
+	  //lecturaCNY70= HAL_GPIO_ReadPin(CNY70_GPIO_Port, CNY70_Pin);
+	  lecturaCNY70= HAL_GPIO_ReadPin(CNY70_Test_GPIO_Port, CNY70_Test_Pin);
 	  windSpeed= ConvertRPMtoMeterPerSecond(rpmCNY70);
 	  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, lecturaCNY70);
 
@@ -356,6 +357,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : CNY70_Test_Pin */
+  GPIO_InitStruct.Pin = CNY70_Test_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(CNY70_Test_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : LD2_Pin */
   GPIO_InitStruct.Pin = LD2_Pin;

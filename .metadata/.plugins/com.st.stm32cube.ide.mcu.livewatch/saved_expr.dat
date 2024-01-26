@@ -1,4 +1,7 @@
-Temperature
-Pressure
-Humidity
+TemperatureBMP
+PressureBMP
+HumidityBMP
 tRaw
+MedicionesEstacion
+AnalogSensors
+LuzDetectada

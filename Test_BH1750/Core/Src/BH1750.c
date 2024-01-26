@@ -132,6 +132,7 @@ BH1750_STATUS BH1750_ReadLight(float *Result)
 	float result;
 	uint8_t tmp[2];
 
+
 	//if(HAL_OK == HAL_I2C_Master_Receive(bh1750_i2c, BH1750_ADDRESS, tmp, 2, 10))
 	if(HAL_OK == HAL_I2C_Master_Receive_DMA(bh1750_i2c, BH1750_ADDRESS, tmp, 2))
 	{
