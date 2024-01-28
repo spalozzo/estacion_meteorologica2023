@@ -73,6 +73,7 @@ osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
 
 SemaphoreHandle_t SEM_Mediciones;
+SemaphoreHandle_t SEM_I2C;
 
 //Estructura que va a guardar todas las mediciones
 SensedValues MedicionesEstacion;
@@ -115,6 +116,7 @@ void StartDefaultTask(void const * argument);
 
 void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c)
 {
+	BaseType_t CambioContexto= pdFALSE;
 	if(hi2c == &hi2c1)
 	{
 		/* Calculate the Raw data for the parameters
@@ -123,26 +125,23 @@ void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c)
 		pRaw = (RawData[0]<<12)|(RawData[1]<<4)|(RawData[2]>>4);
 		tRaw = (RawData[3]<<12)|(RawData[4]<<4)|(RawData[5]>>4);
 		hRaw = (RawData[6]<<8)|(RawData[7]);
+
+		xSemaphoreGiveFromISR(SEM_I2C, pdFALSE);
+		portYIELD_FROM_ISR(CambioContexto);
 	}
 }
 
 void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c)
 {
 	float result;
+	BaseType_t CambioContexto= pdFALSE;
 
 	result = (tmp[0] << 8) | (tmp[1]);
-/*
-	if(Bh1750_Mtreg != BH1750_DEFAULT_MTREG)
-	{
-		result *= (float)((uint8_t)BH1750_DEFAULT_MTREG/(float)Bh1750_Mtreg);
-	}
-
-	if(Bh1750_Mode == ONETIME_HIGH_RES_MODE_2 || Bh1750_Mode == CONTINUOUS_HIGH_RES_MODE_2)
-	{
-		result /= 2.0;
-	}*/
 
 	LuzDetectada = result / (float)BH1750_CONVERSION_FACTOR;
+
+	xSemaphoreGiveFromISR(SEM_I2C, pdFALSE);
+	portYIELD_FROM_ISR(CambioContexto);
 
 }
 
@@ -160,16 +159,38 @@ void Task_ReadSensors(void *pvParam)
 	while(1)
 	{
 		xSemaphoreTake(SEM_Mediciones, portMAX_DELAY);
+		//BH1750_ReadLight(&MedicionesEstacion.Light);
 		//BME280_Measure();
 		MedicionesEstacion.Temperature = Temperature;
 		MedicionesEstacion.Pressure = Pressure;
-		BH1750_ReadLight(&MedicionesEstacion.Light);
 		MedicionesEstacion.Light= LuzDetectada;
 		MedicionesEstacion.AirQuality= MQ135_NivelContaminacion(ConversionGasADC);
 		MedicionesEstacion.WindSpeed= CNY70_MedicionVelocidad(rpmCNY70);
 
 		xSemaphoreGive(SEM_Mediciones);
 		vTaskDelay(pdMS_TO_TICKS(1000));
+	}
+}
+
+void Task_Light(void *pvParam)
+{
+	while(1)
+	{
+		xSemaphoreTake(SEM_I2C, portMAX_DELAY);
+		BH1750_ReadLight(&MedicionesEstacion.Light);
+		//xSemaphoreGive(SEM_I2C);
+		//vTaskDelay(pdMS_TO_TICKS(1000));
+	}
+}
+
+void Task_Pressure(void *pvParam)
+{
+	while(1)
+	{
+		xSemaphoreTake(SEM_I2C, portMAX_DELAY);
+		BME280_Measure();
+		//xSemaphoreGive(SEM_I2C);
+		//vTaskDelay(pdMS_TO_TICKS(1000));
 	}
 }
 
@@ -238,7 +259,7 @@ int main(void)
   BH1750_SetMode(CONTINUOUS_HIGH_RES_MODE);
 
   //Inicializacion BMP280
-  //BME280_Config(OSRS_1, OSRS_4, OSRS_1, MODE_NORMAL, T_SB_0p5, IIR_16);
+  BME280_Config(OSRS_1, OSRS_4, OSRS_1, MODE_NORMAL, T_SB_0p5, IIR_16);
 
 
   //Inicializacion ESP01
@@ -258,8 +279,13 @@ int main(void)
   /* add semaphores, ... */
 
   SEM_Mediciones= xSemaphoreCreateBinary();
+  SEM_I2C= xSemaphoreCreateBinary();
+
   xSemaphoreTake(SEM_Mediciones, 0);
   xSemaphoreGive(SEM_Mediciones);
+
+  xSemaphoreTake(SEM_I2C, 0);
+  xSemaphoreGive(SEM_I2C);
 
   /* USER CODE END RTOS_SEMAPHORES */
 
@@ -280,6 +306,8 @@ int main(void)
   /* add threads, ... */
 
   xTaskCreate(Task_ReadSensors, "ReadSensors", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
+  xTaskCreate(Task_Light, "Task_Light", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
+  xTaskCreate(Task_Pressure, "Task_Pressure", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);
   //xTaskCreate(Task_SendDataToThingspeak, "SendDataToThingspeak", configMINIMAL_STACK_SIZE*5, NULL, tskIDLE_PRIORITY + 2, NULL);
 
   vTaskStartScheduler();

@@ -1,6 +1,6 @@
 Core/Src/Display/ssd1306_tests.o: ../Core/Src/Display/ssd1306_tests.c \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_conf.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -39,10 +39,10 @@ Core/Src/Display/ssd1306_tests.o: ../Core/Src/Display/ssd1306_tests.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_fonts.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_tests.h
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_conf.h:
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_fonts.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_tests.h
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:
@@ -81,5 +81,5 @@ C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Co
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_fonts.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_tests.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_fonts.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_tests.h:

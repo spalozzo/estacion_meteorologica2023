@@ -67,7 +67,7 @@ void Mostrar_Temperatura()
 		ssd1306_SetCursor(i - 3, 20);
 
 		#ifdef SSD1306_INCLUDE_FONT_7x10
-		ssd1306_WriteString("Temp", Font_7x10, White);
+		ssd1306_WriteString("Temp.", Font_7x10, White);
 		#endif
 
 		ssd1306_SetCursor(j - 10, 35);
@@ -97,7 +97,7 @@ void Mostrar_Humedad()
 		ssd1306_SetCursor(iD, 20);
 
 		#ifdef SSD1306_INCLUDE_FONT_7x10
-		ssd1306_WriteString("Hum", Font_7x10, White);
+		ssd1306_WriteString("Hum.", Font_7x10, White);
 		#endif
 
 		ssd1306_SetCursor(jD - 3, 35);
@@ -116,7 +116,7 @@ uint16_t read;
 
 void Mostrar_Presion()
 {
-	float Presion = 34.56;
+	float Presion = MedicionesEstacion.Pressure;
 
 	if (i <= -50 && j <= -50)
 	{
@@ -128,7 +128,7 @@ void Mostrar_Presion()
 		ssd1306_SetCursor(i + 2, 20);
 
 		#ifdef SSD1306_INCLUDE_FONT_7x10
-		ssd1306_WriteString("Pres", Font_7x10, White);
+		ssd1306_WriteString("Pres.", Font_7x10, White);
 		#endif
 
 		ssd1306_SetCursor(j - 9, 35);
@@ -140,21 +140,21 @@ void Mostrar_Presion()
 		ssd1306_WriteString(Humedad_str, Font_7x10, White);
 
 		#ifdef SSD1306_INCLUDE_FONT_7x10
-		ssd1306_WriteString(" Atm", Font_7x10, White);
+		ssd1306_WriteString(" hPa", Font_7x10, White);
 		#endif
 	}
 }
 
 void Mostrar_Lux()
 {
-	float Lux = 30.34;
+	float Lux = MedicionesEstacion.Light;
 
 	if(Cambio_Pantalla == 1)
 	{
 		ssd1306_SetCursor(iD + 2, 20);
 
 		#ifdef SSD1306_INCLUDE_FONT_7x10
-		ssd1306_WriteString("Lux", Font_7x10, White);
+		ssd1306_WriteString("Luz", Font_7x10, White);
 		#endif
 
 		ssd1306_SetCursor(jD - 4, 35);
@@ -166,14 +166,14 @@ void Mostrar_Lux()
 		ssd1306_WriteString(Humedad_str, Font_7x10, White);
 
 		#ifdef SSD1306_INCLUDE_FONT_7x10
-		ssd1306_WriteString(" %", Font_7x10, White);
+		ssd1306_WriteString(" Lx", Font_7x10, White);
 		#endif
 	}
 }
 
 void Mostrar_Velocidad()
 {
-	float Velocidad = 30.45;
+	float Velocidad = MedicionesEstacion.WindSpeed;
 
 	if (i <= -50 && j <= -50)
 	{
@@ -182,10 +182,10 @@ void Mostrar_Velocidad()
 
 	if(Cambio_Pantalla == 2)
 	{
-		ssd1306_SetCursor(i + 8, 20);
+		ssd1306_SetCursor(i - 5, 20);
 
 		#ifdef SSD1306_INCLUDE_FONT_7x10
-		ssd1306_WriteString("Vel", Font_7x10, White);
+		ssd1306_WriteString("Viento", Font_7x10, White);
 		#endif
 
 		ssd1306_SetCursor(j - 11, 35);
@@ -202,7 +202,7 @@ void Mostrar_Velocidad()
 
 void Mostrar_Calidad_Aire()
 {
-	float Calidad = 30.45;
+	float Calidad = MedicionesEstacion.AirQuality;
 
 	if(Cambio_Pantalla == 2)
 	{
@@ -234,19 +234,19 @@ void Mostrar_Tiempo(void)
 
 	ssd1306_SetCursor(35, 0);
 
-	Char_Display(15 + gTime.Hours, 0);
+	Char_Display(19+gTime.Hours, 0);
 	ssd1306_WriteString(":", Font_7x10, White);
-	Char_Display(1 + gTime.Minutes, 1);
+	Char_Display(16+gTime.Minutes, 1);
 	ssd1306_WriteString(":", Font_7x10, White);
 	Char_Display(gTime.Seconds, 1);
 
 	ssd1306_SetCursor(28, 54);
 
-	Char_Display(2023 + gDate.Year, 0);
+	Char_Display(2024+gDate.Year, 0);
 	ssd1306_WriteString("/", Font_7x10, White);
-	Char_Display(7 + gDate.Month, 1);
+	Char_Display(0+gDate.Month, 1);
 	ssd1306_WriteString("/", Font_7x10, White);
-	Char_Display(29 + gDate.Date, 1);
+	Char_Display(25+gDate.Date, 1);
 }
 
 void Char_Display(uint16_t dato, uint8_t Cero)

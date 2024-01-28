@@ -1,10 +1,10 @@
-12:01:21 **** Build of configuration Debug for project Display_Sensores_RTOS ****
+18:40:00 **** Incremental Build of configuration Debug for project Display_Sensores_RTOS ****
 make -j4 all 
-arm-none-eabi-size  Display_Sensores_RTOS.elf 
+arm-none-eabi-size   Display_Sensores_RTOS.elf 
    text	   data	    bss	    dec	    hex	filename
-  52272	    500	  21164	  73936	  120d0	Display_Sensores_RTOS.elf
+  52704	    508	  20868	  74080	  12160	Display_Sensores_RTOS.elf
 Finished building: default.size.stdout
  
 
-12:01:23 Build Finished. 0 errors, 0 warnings. (took 1s.953ms)
+18:40:02 Build Finished. 0 errors, 0 warnings. (took 1s.344ms)
 

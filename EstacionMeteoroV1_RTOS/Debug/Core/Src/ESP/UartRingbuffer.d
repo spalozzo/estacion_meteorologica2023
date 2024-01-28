@@ -1,5 +1,5 @@
 Core/Src/ESP/UartRingbuffer.o: ../Core/Src/ESP/UartRingbuffer.c \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/ESP/UartRingbuffer.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/ESP/UartRingbuffer.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -38,7 +38,7 @@ Core/Src/ESP/UartRingbuffer.o: ../Core/Src/ESP/UartRingbuffer.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/ESP/UartRingbuffer.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/ESP/UartRingbuffer.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:

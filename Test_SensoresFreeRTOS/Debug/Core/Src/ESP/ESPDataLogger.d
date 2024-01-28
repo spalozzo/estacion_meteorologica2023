@@ -1,5 +1,5 @@
 Core/Src/ESP/ESPDataLogger.o: ../Core/Src/ESP/ESPDataLogger.c \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/UartRingbuffer.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/UartRingbuffer.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -33,8 +33,8 @@ Core/Src/ESP/ESPDataLogger.o: ../Core/Src/ESP/ESPDataLogger.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/ESPDataLogger.h
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/UartRingbuffer.h:
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/ESPDataLogger.h
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/UartRingbuffer.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:
@@ -68,4 +68,4 @@ C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/Test_SensoresFreeRTOS/Cor
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/ESPDataLogger.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/Test_SensoresFreeRTOS/Core/Inc/ESP/ESPDataLogger.h:

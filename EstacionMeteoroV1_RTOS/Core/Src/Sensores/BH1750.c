@@ -23,6 +23,8 @@ uint8_t 			Bh1750_Mtreg;	// Current MT register value
 extern DMA_HandleTypeDef 	hdma_i2c1_tx;
 extern DMA_HandleTypeDef 	hdma_i2c1_rx;
 
+uint8_t tmp[2];
+
 //
 //	Initialization.
 //
@@ -129,11 +131,16 @@ BH1750_STATUS BH1750_TriggerManualConversion(void)
 //
 BH1750_STATUS BH1750_ReadLight(float *Result)
 {
-	float result;
-	uint8_t tmp[2];
 
+	if(HAL_OK == HAL_I2C_Master_Receive_IT(bh1750_i2c, BH1750_ADDRESS, tmp, 2))
+		return BH1750_OK;
+	else
+		return BH1750_ERROR;
+
+	//float result;
+	//uint8_t tmp[2];
 	//if(HAL_OK == HAL_I2C_Master_Receive(bh1750_i2c, BH1750_ADDRESS, tmp, 2, 10))
-	if(HAL_OK == HAL_I2C_Master_Receive_DMA(bh1750_i2c, BH1750_ADDRESS, tmp, 2))
+	/*if(HAL_OK == HAL_I2C_Master_Receive_DMA(bh1750_i2c, BH1750_ADDRESS, tmp, 2))
 	{
 		result = (tmp[0] << 8) | (tmp[1]);
 
@@ -150,5 +157,6 @@ BH1750_STATUS BH1750_ReadLight(float *Result)
 		*Result = result / (float)BH1750_CONVERSION_FACTOR;
 		return BH1750_OK;
 	}
-	return BH1750_ERROR;
+	return BH1750_ERROR;*/
+
 }

@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (11.3.rel1)
+# Toolchain: GNU Tools for STM32 (10.3-2021.10)
 ################################################################################
 
 -include ../makefile.init
@@ -64,8 +64,8 @@ all: main-build
 main-build: Display_Sensores_RTOS.elf secondary-outputs
 
 # Tool invocations
-Display_Sensores_RTOS.elf Display_Sensores_RTOS.map: $(OBJS) $(USER_OBJS) C:\Users\santi\STM32CubeIDE\estacion_meteorologica2023\Display_Sensores_RTOS\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Display_Sensores_RTOS.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\santi\STM32CubeIDE\estacion_meteorologica2023\Display_Sensores_RTOS\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Display_Sensores_RTOS.map" -Wl,--gc-sections -static -u _printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Display_Sensores_RTOS.elf Display_Sensores_RTOS.map: $(OBJS) $(USER_OBJS) C:\Users\Santi\STM32CubeIDE\estacion_meteorologica2023\Display_Sensores_RTOS\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Display_Sensores_RTOS.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Santi\STM32CubeIDE\estacion_meteorologica2023\Display_Sensores_RTOS\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Display_Sensores_RTOS.map" -Wl,--gc-sections -static -u _printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

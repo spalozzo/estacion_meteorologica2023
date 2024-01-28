@@ -41,7 +41,7 @@ Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.o: \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/LM35.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/LM35.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../Core/Inc/FreeRTOSConfig.h \
@@ -59,17 +59,17 @@ Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/DHT22.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/BH1750.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/BMP280.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/MQ135.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/CNY70.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/Datos_Display.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_conf.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_fonts.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/ESP/ESPDataLogger.h \
- C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/ESP/UartRingbuffer.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/DHT22.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/BH1750.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/BMP280.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/MQ135.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/CNY70.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/Datos_Display.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_conf.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_fonts.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/ESP/ESPDataLogger.h \
+ C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/ESP/UartRingbuffer.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
  ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h
@@ -115,7 +115,7 @@ Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.o: \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/LM35.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/LM35.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 ../Core/Inc/FreeRTOSConfig.h:
@@ -133,17 +133,17 @@ C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Co
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/DHT22.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/BH1750.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/BMP280.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/MQ135.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/CNY70.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/Datos_Display.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_conf.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_fonts.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/ESP/ESPDataLogger.h:
-C:/Users/santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/ESP/UartRingbuffer.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/DHT22.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/BH1750.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/BMP280.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/MQ135.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Sensores/CNY70.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/Datos_Display.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_conf.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/Display/ssd1306_fonts.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/ESP/ESPDataLogger.h:
+C:/Users/Santi/STM32CubeIDE/estacion_meteorologica2023/EstacionMeteoroV1_RTOS/Core/Inc/ESP/UartRingbuffer.h:
 ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h:
 ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
 ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h:

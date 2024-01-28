@@ -45,8 +45,8 @@ typedef struct
 /* USER CODE BEGIN PD */
 #define CANT_PARAMETROS 6
 
-#define MY_NETWORK "Fibertel WiFi364 2.4GHz"
-#define MY_PASSWORD "00421019428"
+#define MY_NETWORK "Red Wi-Fi de Eduardo"
+#define MY_PASSWORD "ENahum8095"
 //#define MY_NETWORK "Samsung"
 //#define MY_PASSWORD "12341234"
 
@@ -77,9 +77,6 @@ UART_HandleTypeDef huart2;
 
 osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
-
-
-
 uint16_t readValue;
 
 uint8_t screenBuffer[128 * 64 / 8];
@@ -95,6 +92,7 @@ extern uint8_t enableCapture;
 extern uint8_t start;
 
 SemaphoreHandle_t SEM_Mediciones;
+SemaphoreHandle_t SEM_I2C;
 
 //Estructura que va a guardar todas las mediciones
 SensedValues MedicionesEstacion;
@@ -103,8 +101,6 @@ float dataToSend[CANT_PARAMETROS];
 //Sensor de Temperatura y de Calidad de Aire
 uint32_t AnalogSensors[2];
 //Almacena la conversion del LM35 y del MQ135
-
-//uint32_t ConversionGasADC;
 
 //Sensor Optico
 extern uint32_t rpmCNY70;
@@ -115,6 +111,10 @@ extern uint8_t chipID;
 extern int32_t tRaw, pRaw, hRaw;
 extern uint8_t RawData[8];
 float TemperatureBMP, PressureBMP, HumidityBMP;
+
+//Sensor de Luz
+extern uint8_t tmp[2];
+float LuzDetectada;
 
 /* USER CODE END PV */
 
@@ -141,6 +141,7 @@ void StartDefaultTask(void const * argument);
 
 void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c)
 {
+	BaseType_t CambioContexto= pdFALSE;
 	if(hi2c == &hi2c1)
 	{
 		/* Calculate the Raw data for the parameters
@@ -149,7 +150,23 @@ void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c)
 		pRaw = (RawData[0]<<12)|(RawData[1]<<4)|(RawData[2]>>4);
 		tRaw = (RawData[3]<<12)|(RawData[4]<<4)|(RawData[5]>>4);
 		hRaw = (RawData[6]<<8)|(RawData[7]);
+
+		xSemaphoreGiveFromISR(SEM_I2C, pdFALSE);
+		portYIELD_FROM_ISR(CambioContexto);
 	}
+}
+
+void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c)
+{
+	float result;
+	BaseType_t CambioContexto= pdFALSE;
+
+	result = (tmp[0] << 8) | (tmp[1]);
+
+	LuzDetectada = result / (float)BH1750_CONVERSION_FACTOR;
+
+	xSemaphoreGiveFromISR(SEM_I2C, pdFALSE);
+	portYIELD_FROM_ISR(CambioContexto);
 }
 /*
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
@@ -165,8 +182,8 @@ void Set_Time(void)
 	RTC_TimeTypeDef sTime = {0};
 	RTC_DateTypeDef sDate = {0};
 
-	sTime.Hours = 0x0;
-	sTime.Minutes = 0x0;
+	sTime.Hours = 0x13;
+	sTime.Minutes = 0x0F;
 	sTime.Seconds = 0x0;
 	sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
 	sTime.StoreOperation = RTC_STOREOPERATION_RESET;
@@ -176,10 +193,10 @@ void Set_Time(void)
 		Error_Handler();
 	}
 
-	sDate.WeekDay = RTC_WEEKDAY_MONDAY;
+	sDate.WeekDay = RTC_WEEKDAY_FRIDAY;
 	sDate.Month = RTC_MONTH_JANUARY;
-	sDate.Date = 0x1;
-	sDate.Year = 0x0;
+	sDate.Date = 0x1A;
+	sDate.Year = 0x7E8;
 
 	if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BCD) != HAL_OK)
 	{
@@ -251,7 +268,9 @@ void Task_Data_Display (void *pvParameters)
 
 	while(1)
 	{
+		xSemaphoreTake(SEM_I2C, portMAX_DELAY);
 		Mostrar_Datos();
+		xSemaphoreGive(SEM_I2C);
 	}
 }
 
@@ -268,19 +287,38 @@ void Task_ReadSensors(void *pvParam)
 	while(1)
 	{
 		xSemaphoreTake(SEM_Mediciones, portMAX_DELAY);
-
+		xSemaphoreGive(SEM_I2C);
 		stateCNY70= HAL_GPIO_ReadPin(CNY70_GPIO_Port, CNY70_Pin);
-
 		MedicionesEstacion.Temperature = LM35_Read_Temperature(AnalogSensors[0]);
+		MedicionesEstacion.Pressure = PressureBMP/100; //Convierte de Pa a hPa
 		DHT22_Read_Humidity(&MedicionesEstacion.Humidity);
-		BME280_Measure();
-		MedicionesEstacion.Pressure = PressureBMP;
-		MedicionesEstacion.WindSpeed= CNY70_MedicionVelocidad(rpmCNY70);
-		BH1750_ReadLight(&MedicionesEstacion.Light);
+		MedicionesEstacion.Light= LuzDetectada;
 		MedicionesEstacion.AirQuality= MQ135_NivelContaminacion(AnalogSensors[1]);
+		MedicionesEstacion.WindSpeed= CNY70_MedicionVelocidad(rpmCNY70);
 
 		xSemaphoreGive(SEM_Mediciones);
 		vTaskDelay(pdMS_TO_TICKS(1000));
+	}
+}
+
+void Task_ReadLight(void *pvParam)
+{
+	while(1)
+	{
+		//Este semaforo toma el comando del I2C para que no haya interferencia con el
+		//sensor de presion. Luego es liberado en la callback
+		xSemaphoreTake(SEM_I2C, portMAX_DELAY);
+		BH1750_ReadLight(&MedicionesEstacion.Light);
+	}
+}
+
+void Task_ReadPressure(void *pvParam)
+{
+	while(1)
+	{
+		//Este semaforo funciona al igual que en el sensor de luz
+		xSemaphoreTake(SEM_I2C, portMAX_DELAY);
+		BME280_Measure();
 	}
 }
 
@@ -348,15 +386,16 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  //Inicializacion BH1750
+  //Inicializacion BH1750 - Sensor de Luz
   BH1750_Init(&hi2c1);
   BH1750_SetMode(CONTINUOUS_HIGH_RES_MODE);
 
-  //Inicializacion BMP280
+  //Inicializacion BMP280 - Sensor de Presion
   BME280_Config(OSRS_1, OSRS_4, OSRS_1, MODE_NORMAL, T_SB_0p5, IIR_16);
 
+  //PantallaInicialDisplay();
 
-  //Inicializacion ESP01
+  //Inicializacion ESP01 - Modulo WiFi
   ESP_Init(MY_NETWORK, MY_PASSWORD);
 
   /* USER CODE END 2 */
@@ -369,8 +408,13 @@ int main(void)
   /* add semaphores, ... */
 
   SEM_Mediciones= xSemaphoreCreateBinary();
+  SEM_I2C= xSemaphoreCreateBinary();
+
   xSemaphoreTake(SEM_Mediciones, 0);
   xSemaphoreGive(SEM_Mediciones);
+
+  xSemaphoreTake(SEM_I2C, 0);
+  xSemaphoreGive(SEM_I2C);
 
   /* USER CODE END RTOS_SEMAPHORES */
 
@@ -390,7 +434,11 @@ int main(void)
   /* USER CODE BEGIN RTOS_THREADS */
 
   xTaskCreate(Task_Data_Display, "Data_Display", configMINIMAL_STACK_SIZE * 4, NULL, tskIDLE_PRIORITY + 1, NULL);
+
   xTaskCreate(Task_ReadSensors, "ReadSensors", configMINIMAL_STACK_SIZE * 2, NULL, tskIDLE_PRIORITY + 1, NULL);
+  xTaskCreate(Task_ReadLight, "ReadLight", configMINIMAL_STACK_SIZE * 4, NULL, tskIDLE_PRIORITY + 1, NULL);
+  xTaskCreate(Task_ReadPressure, "ReadPressure", configMINIMAL_STACK_SIZE * 4, NULL, tskIDLE_PRIORITY + 1, NULL);
+
   xTaskCreate(Task_SendDataToThingspeak, "SendDataToThingspeak", configMINIMAL_STACK_SIZE * 5, NULL, tskIDLE_PRIORITY + 2, NULL);
 
   vTaskStartScheduler();
